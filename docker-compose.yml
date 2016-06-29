@@ -1,0 +1,15 @@
+web:
+  build: .
+  command: 'bash -c ''gunicorn --bind 0.0.0.0:5000 text_support:app'''
+  working_dir: /text_support
+  volumes:
+    - .:/text_support
+  environment:
+    DATABASE_URL: 'postgres://postgres:@db:5432/postgres'
+  ports:
+    - '5000:5000'
+  links:
+    - db
+
+db:
+  image: postgres

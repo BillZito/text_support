@@ -1,0 +1,14 @@
+language: python
+cache: pip
+
+python:
+  - "3.3"
+  - "3.4"
+  - "3.5"
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - make local_test
+  - make local_lint

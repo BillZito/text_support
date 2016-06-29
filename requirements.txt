@@ -1,0 +1,9 @@
+Flask==0.11.*
+Flask-Migrate==1.*
+Flask-Script==2.*
+Flask-SQLAlchemy==2.*
+gunicorn==19.*
+mock==2.*
+nose2<=1.0
+pylint==1.*
+simplejson==3.*
