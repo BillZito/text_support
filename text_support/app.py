@@ -6,12 +6,9 @@
 
 from flask import Flask
 
-app = Flask(__name__)
+from .views import app_views
 
-@app.route("/")
-def hello():
-    """
-    A simple function to render "Hello World" and status code 200 when the `/`
-    endpoint is accessed. Just for testing purposes.
-    """
-    return "Hello World!"
+# Create the flask application and instruct it to use all of the views (routes
+# with associated functions) defined in `app_views` in `views.py`.
+app = Flask(__name__)
+app.register_blueprint(app_views)
