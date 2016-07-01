@@ -13,11 +13,8 @@ health, check out our [website](http://hackmh.com) or email
 ## Learn More
 
 Documentation for installation and development can be found in the [docs](./docs)
-folder.
-
-## Contributing
-
-**hackMH** is committed to providing a supportive environment for beginners and
+folder, and more specific information on contributing can be found at
+[CONTRIBUTING.md](./CONTRIBUTING.md). **hackMH** is committed to
+providing a supportive environment for beginners and
 experts and everyone in between. If you have any interest in contributing,
-please get in touch. See [CONTRIBUTING.md](./CONTRIBUTING.md) for more info and
-feel free to get in touch with any questions.
+please get in touch.
