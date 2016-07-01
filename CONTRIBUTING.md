@@ -19,14 +19,24 @@ issue, please follow these guidelines.
 
 ## Pull Requests
 
-If you are interested in contributing code to the **text_support**, hooray!
+If you are interested in contributing code to the **text_support**, hooray! If
+this is your first time, the documentation in the [docs](./docs) folder
+will provide you with all you need to know to begin contributing.
 Please let us know if we can answer any questions/help. We're dedicated to
 making **text_support** a supportive environment for contributing to open source for
-individuals of any skill level. Please follow these guidelines, and if you
+individuals of any skill level.
+
+If everything went well with developing your change, please follow
+these guidelines to submit it to our project, and if you
 have any questions, ask!
+
 - Read [this](https://gun.io/blog/how-to-github-fork-branch-and-pull-request/)
   blog post on contributing to open source.
-- Fork the project.
+- If you have not already done so, fork the project if you are not a member of the [hackMH
+  organization](https://github.com/hackmh).
+- Clone the project onto your machine with `git clone` if this is your
+  first time working on the project. If you already have the code, make sure you
+  are using the most recent code with `git pull origin master`.
 - Create a topic/feature branch.
   - Please follow the following naming convention for branch names:
     `FIRSTNAME-description`. So for a branch containing README fixes, I
