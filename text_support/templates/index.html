@@ -5,4 +5,9 @@ will have both a `layout.html` and an `index.html` page like [this
 example](https://github.com/pallets/flask/tree/master/examples/flaskr/templates).
 
 -->
-<h1>Hello World!</h1>
+
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Welcome to Text Support</h1>
+{% endblock %}
