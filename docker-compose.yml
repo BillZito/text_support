@@ -6,6 +6,9 @@ web:
     - .:/text_support
   environment:
     DATABASE_URL: 'postgres://postgres:@db:5432/postgres'
+  env_file:
+    - .env
+    - .env.development
   ports:
     - '5000:5000'
   links:
