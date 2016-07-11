@@ -6,6 +6,7 @@ DOCKER_IMAGE=text_support_web
 WEB=web
 DATABASE=db
 BASH=/bin/bash -c
+HEROKU_APP=hackmh-text-support
 
 # `$ make build_docker`
 #
@@ -54,14 +55,39 @@ shell: db_up
 serve:
 	$(DOCKER_COMPOSE) up $(WEB)
 
-# @TODO The following Makefile commands will be written as we fill in more of
-# the applications behavior.
+# Copy all of the environment variables from the specified `.env*` files onto
+# the Heroku platform.
+set_heroku_config:
+	heroku config:push --app $(HEROKU_APP) --file .env -o
+	heroku config:push --app $(HEROKU_APP) --file .env.production -o
 
-# migrate:
+# Make sure all of the necessary add ons for the heroku platform exist.
+create_add_ons:
+	heroku addons:create heroku-postgresql:hobby-dev &&\
+	heroku addons:create scheduler:standard
+	heroku addons:create newrelic:wayne
 
-# deploy_create:
+# Helper method to delete add ons.
+delete_add_ons:
+	heroku addons:destroy heroku-postgresql:hobby-dev --confirm $(HEROKU_APP)
+	heroku addons:destroy scheduler:standard --confirm $(HEROKU_APP)
+	heroku addons:destroy newrelic:wayne --configm $(HEROKU_APP)
 
-# deploy_update:
+# Deploy code to Heroku.
+#
+# @TODO This method will only deploy the master branch.
+deploy_code:
+	git push heroku master
+
+# `$ make deploy_create`
+#
+# Deploy the application for the first time to the Heroku platform.
+deploy_create: set_heroku_config create_add_ons deploy_code
+
+# `$ make deploy_update`
+#
+# Update the application running on the Heroku platform.
+deploy_update: deploy_code
 
 # Run check by default.
 .DEFAULT_GOAL := check
