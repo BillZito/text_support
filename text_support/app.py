@@ -8,7 +8,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from .config import environment_config
-from .views import app_views
+from .views import static_views, webhook_views
 
 # Create the flask application.
 app = Flask(__name__)
@@ -21,4 +21,5 @@ app.config.from_object(environment_config())
 db = SQLAlchemy(app)
 
 # Instruct flask application to use views defined in `views.py`.
-app.register_blueprint(app_views)
+app.register_blueprint(static_views)
+app.register_blueprint(webhook_views)
