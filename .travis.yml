@@ -29,3 +29,5 @@ deploy:
     secure: lER3OFCrEOUuct8/ZWVCcplIGqCqSwkZB9BD76auJmBEyZzRQ1DufOYxaC0EMQgs9Zqf1RrysjQyKeao/zRk9MxWNSHuZbLJddAAVK2LfJhOblcHN2cqnU3mXSLdX0AnPyhOGKu2zs2wiy9e0kI8piSwIH6o3CufqnduLOR2yOtfZ8pDSBMvCzNXP7hiaHDN7yN8lwaiZlvZMwYgsBb9iT4ptVNf+GKdViSJaeBrwQZiMDw40qXBNduV+w5dH7G63eBXxopQhXrCPI7vbSvEW43Q/yEJ4NoX/eXo2ExHmFLqYliv7J/pYTylJ8fpAJjW/nTsUQdPpSss43pjYB61Vz19/9H1cme8CW6nV5AwTrYYcXlQvYjEaetFT2YnGLKr91lNeDBkm5Dw+FUgyFtGpGEBuDPOxELkldPxiImgMuD7Lqx5jD/JJrFcG+bderz6gkRZe6/5VrWctGE+zwZiNVEUUFUff2fe38F0jtYDhedgk3w9ZfO5OubXOhrljsF6LcXNhnKmrNmcs+DSR7TgyV9iTARgLpyopzF5THKvLJ0h7FYKYQr6doLmKZls0srW0c+zddR9pqrFt8M6JLg7+ncmiN4lMM/2Ui/nhAE5/V8sE/93bbjrdwSAut9yxpGQPRFJlYQhrVJPZpA7aUoFHjIrS3BruEUCMjVNmA42SbQ=
   run:
     - "python manage.py db upgrade"
+  on:
+    - python: '3.5'
