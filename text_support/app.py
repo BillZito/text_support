@@ -4,25 +4,17 @@
 
 # pylint: disable=import-error, invalid-name
 
-import os
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from .config import DevelopmentConfig, TestConfig, ProductionConfig
+from .config import environment_config
 from .views import app_views
 
 # Create the flask application.
 app = Flask(__name__)
 
 # Given the appropriate environment, set the configuration.
-config_options = {
-    "DEVELOPMENT": DevelopmentConfig,
-    "TEST": TestConfig,
-    "PRODUCTION": ProductionConfig
-}
-config_object = config_options[os.environ["ENVIRONMENT"]]
-app.config.from_object(config_object)
+app.config.from_object(environment_config())
 
 # Connect to the database. Other files can use this through importing
 # `db` from `.app`.
