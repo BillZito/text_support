@@ -6,4 +6,5 @@ gunicorn==19.*
 mock==2.*
 nose2<=1.0
 pylint==1.*
+psycopg2==2.*
 simplejson==3.*

@@ -20,7 +20,7 @@ db_up:
 
 # Run the tests without the extra docker commands.
 local_test:
-	nose2
+	export ENVIRONMENT=TEST; nose2
 
 # `$ make test`
 #
