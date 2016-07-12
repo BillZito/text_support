@@ -12,7 +12,8 @@ organization. We assume all other commands are being run from this directory.
 ## Create the development environment
 
 As we discussed earlier, we use Docker to containerize our development environment.
-Run `make build_docker` to build the development environment.
+Run `make build_docker` to build the development environment. Additionally, run
+`make dbcreate_all` and `make dbmigrate_all`.
 
 ## Check everything worked
 

@@ -20,7 +20,7 @@ db_up:
 
 # Run the tests without the extra docker commands.
 local_test:
-	nose2
+	export ENVIRONMENT=TEST; nose2
 
 # `$ make test`
 #
@@ -55,6 +55,38 @@ shell: db_up
 serve:
 	$(DOCKER_COMPOSE) up $(WEB)
 
+# Create the development database.
+dbcreate_dev: db_up
+	$(DOCKER_RUN) $(WEB) python manage.py create_db
+
+# Create the test database.
+dbcreate_test: db_up
+	$(DOCKER_RUN) $(WEB) bash -c "export ENVIRONMENT=TEST; python manage.py create_db"
+
+# `$ make dbcreate_all`
+#
+# Create the test and development databases.
+dbcreate_all: dbcreate_dev dbcreate_test
+
+# Migrate the development database.
+dbmigrate_dev: db_up
+	$(DOCKER_RUN) $(WEB) python manage.py db upgrade
+
+# Migrate the test database.
+dbmigrate_test: db_up
+	$(DOCKER_RUN) $(WEB) bash -c "export ENVIRONMENT=TEST; python manage.py db upgrade"
+
+# `$ make dbmigrate_all`
+#
+# Migrate both the development and test databases.
+dbmigrate_all: dbmigrate_dev dbmigrate_test
+
+# `$ make generate_migration`
+#
+# Generate the files for a migration.
+generate_migration: db_up
+	$(DOCKER_RUN) $(WEB) python manage.py db migrate
+
 # Copy all of the environment variables from the specified `.env*` files onto
 # the Heroku platform.
 set_heroku_config:
@@ -79,15 +111,23 @@ delete_add_ons:
 deploy_code:
 	git push heroku master
 
+# Create the production database.
+dbcreate_prod:
+	heroku run python manage.py create_db --app $(HEROKU_APP)
+
+# Migrate the production database.
+dbmigrate_prod:
+	heroku run python manage.py db upgrade --app $(HEROKU_APP)
+
 # `$ make deploy_create`
 #
 # Deploy the application for the first time to the Heroku platform.
-deploy_create: set_heroku_config create_add_ons deploy_code
+deploy_create: set_heroku_config create_add_ons deploy_code dbcreate_prod dbmigrate_prod
 
 # `$ make deploy_update`
 #
 # Update the application running on the Heroku platform.
-deploy_update: deploy_code
+deploy_update: deploy_code dbmigrate_prod
 
 # Run check by default.
 .DEFAULT_GOAL := check

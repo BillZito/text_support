@@ -25,4 +25,5 @@ the python dependencies installed), run `make shell`.
 
 When we update the projects dependencies, we will need to update our Docker
 development environment. Determine this by checking if either `Dockerfile` or
-`requirements.txt` has changed. If so, run `make build_docker`.
+`requirements.txt` has changed. If so, run `make build_docker`. Additionally,
+if the database schema is updated, then run `make dbmigrate_all`.
