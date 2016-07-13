@@ -6,6 +6,8 @@
 
 from flask import Blueprint, render_template, request, Response
 
+from .text import get_response
+
 # We define `static_views` as a Blueprint so that we can import the views in
 # `app.py`. This allows all of the `view` logic to be stored in a single file.
 # Read more [here](http://flask.pocoo.org/docs/0.11/blueprints/).
@@ -55,16 +57,3 @@ def webhook():
     # just wraps around Twilio.
 
     return Response(status=200)
-
-def get_response(message):
-    """
-    Given what the texter has sent to us, determine our response.
-
-    Args:
-        message (str): The message the texter has sent to us.
-
-    Response:
-        str: The response we will text back to them.
-    """
-    # @TODO Fill this function in with code that will have respond.
-    return message
