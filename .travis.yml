@@ -8,7 +8,6 @@ env:
   - SECRET_KEY=jklwefa209aergnjaflkmwaeoi
   - DATABASE_URL=postgres://postgres:localhost:5432/postgres
 python:
-- '3.3'
 - '3.4'
 - '3.5'
 install:

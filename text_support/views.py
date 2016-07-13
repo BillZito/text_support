@@ -6,7 +6,7 @@
 
 from flask import Blueprint, render_template, request, Response
 
-from .text import get_response
+from .text import get_response, get_text_class
 
 # We define `static_views` as a Blueprint so that we can import the views in
 # `app.py`. This allows all of the `view` logic to be stored in a single file.
@@ -40,20 +40,19 @@ def webhook():
     """
     # pylint: disable=unused-variable
 
-    if not request.json:
+    if not request.values:
         return Response(status=400)
 
-    # @TODO Finalize these are correct, and also set up the actual webhook on
-    # Twilio.
-    phone_number = request.json["From"]
-    message_body = request.json["Body"]
+    phone_number = request.values.get("From")
+    message_body = request.values.get("Body")
+
+    if None in {phone_number, message_body}:
+        return Response(status=400)
 
     # Write phone_number to db in `Texter`.
 
     response = get_response(message_body)
 
-    # Send the message with text.send(phone_number, response).
-    # `text` is an instance of the `Text` class we'll write, which
-    # just wraps around Twilio.
+    get_text_class().send_message(phone_number, response)
 
-    return Response(status=200)
+    return Response(status=201)
