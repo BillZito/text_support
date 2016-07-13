@@ -15,6 +15,23 @@ This should only be done by the project leader.
   Heroku token to travis. See info in these [Travis CI
   docs](https://docs.travis-ci.com/user/deployment/heroku/).
 
+## Add Ons
+
+### Heroku
+
+Our deploy tasks in the Makefile add all of the Heroku based add ons by default.
+We use New Relic, Postgres, and Heroku Scheduler.
+
+### Twilio
+
+We use Twilio for receiving and responding to text messages. We assign this
+application a phone number. For that number, we configure incoming
+messages to make a POST request to `https://text-support.hackmh.com/webhook`,
+which allows us to send a response. Additionally, we must copy the phone number
+and the Twilio account credentials into `.env.production`. Only someone
+deploying the application needs to worry about Twilio - otherwise we mock
+sending texts in development and test mode.
+
 ## Relevant Files
 - [Procfile](../Procfile) specifies which processes should be run on Heroku.
 - [runtime.txt](../runtime.txt) specifies which python runtime we should use on

@@ -22,19 +22,21 @@ class DevelopmentConfig(Config):
     Configuration for development mode.
     """
     DEVELOPMENT = True
+    ENVIRONMENT = "DEVELOPMENT"
 
 class TestConfig(Config):
     """
     Configuration for testing mode.
     """
     TESTING = True
+    ENVIRONMENT = "TEST"
 
 class ProductionConfig(Config):
     """
     Configuration for production mode.
     """
     DEBUG = False
-    # This value is specified by Heroku, so we leave it as is.
+    ENVIRONMENT = "PRODUCTION"
 
 def environment_config():
     """

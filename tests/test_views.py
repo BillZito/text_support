@@ -10,6 +10,7 @@ import unittest
 # we run tests on. See more details
 # [here](http://flask.pocoo.org/docs/0.11/blueprints/).
 from text_support.app import app
+from text_support.text import get_text_class
 
 class AppViewsTestCase(unittest.TestCase):
     """
@@ -36,3 +37,35 @@ class IndexTestCase(AppViewsTestCase):
         result = self.app.get(index_url)
 
         self.assertEqual(result.status_code, 200)
+
+class WebhookTestCase(AppViewsTestCase):
+    """
+    Test post request Twilio will make to `/webhook` when receiving a text
+    message.
+    """
+    # pylint: disable=missing-super-argument
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._webhook_url = "/webhook"
+
+    def test_post_webhook_success(self):
+        """
+        A successful post to webhook should send a text message, create (or
+        update) a `Texter` entry in the database, and return a status code of
+        201.
+
+        @TODO These tests could be a lot more thorough, but I will expand them
+        once I determine all of the functionality for the `/webhook` route.
+        """
+        post_body = dict(
+            From="+18148264053",
+            Body="Test"
+        )
+
+        previous_texts_sent = get_text_class().messages_sent
+        result = self.app.post(self._webhook_url, data=post_body)
+
+        self.assertEqual(result.status_code, 201)
+        self.assertEqual(previous_texts_sent + 1, get_text_class().messages_sent)
+
