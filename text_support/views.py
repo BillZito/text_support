@@ -6,6 +6,7 @@
 
 from flask import Blueprint, render_template, request, Response
 
+from .models import Texter
 from .text import get_response, get_text_class
 
 # We define `static_views` as a Blueprint so that we can import the views in
@@ -49,10 +50,9 @@ def webhook():
     if None in {phone_number, message_body}:
         return Response(status=400)
 
-    # Write phone_number to db in `Texter`.
+    Texter.record(phone_number)
 
     response = get_response(message_body)
-
     get_text_class().send_message(phone_number, response)
 
     return Response(status=201)

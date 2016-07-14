@@ -6,7 +6,7 @@ env:
   global:
   - ENVIRONMENT=TEST
   - SECRET_KEY=jklwefa209aergnjaflkmwaeoi
-  - DATABASE_URL=postgres://postgres:localhost:5432/postgres
+  - DATABASE_URL=postgres://postgres@localhost:5432/postgres
 python:
 - '3.5'
 install:

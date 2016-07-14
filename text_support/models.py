@@ -18,7 +18,9 @@ from .app import db
 class Texter(db.Model):
     """
     The model representing someone who has texted into the database. We track
-    this so that we can send follow up texts.
+    this so that we can send follow up texts. We record one entry for each new
+    person texting in. If they have already texted in before, we udpate their
+    `text_date`.
 
     Args:
         phone_number (str): The texters phone number.
@@ -66,3 +68,24 @@ class Texter(db.Model):
 
         extension = env_extension_hash[os.environ["ENVIRONMENT"]]
         return base_name + "_" + extension
+
+    @classmethod
+    def record(cls, phone_number):
+        """
+        Record the `phone_number` in the database. If this is the first time
+        we've seen the `phone_number` we create a new `Texter` in the database,
+        and if we've seen this number before, then we update the `text_date`
+        field.
+
+        Args:
+            phone_number (str): The phone number of the texter.
+        """
+        texter = cls.query.filter_by(phone_number=phone_number).first()
+
+        if texter is None:
+            texter = cls(phone_number)
+            db.session.add(texter)
+        else:
+            texter.text_date = datetime.utcnow()
+
+        db.session.commit()
