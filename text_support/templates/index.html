@@ -1,14 +1,44 @@
-<!---
-
-The html for the homepage explaining how `text_support` works. Eventually we
-will have both a `layout.html` and an `index.html` page like [this
-example](https://github.com/pallets/flask/tree/master/examples/flaskr/templates).
-
--->
-
 {% extends "layout.html" %}
-
 {% block body %}
-<h1>Welcome to Text Support!</h1>
-<p>We continuously deploy now.</p>
+  <div id="wrapper">
+    <!-- Main -->
+      <section id="main">
+        <header>
+          <span class="avatar">
+            <img style="height: 200px; width: 300px;" src="{{ url_for('static', filename='images/focal.jpg') }}" alt="" />
+          </span>
+          <h1>Text Support</h1>
+          <p>
+            Text <em>+1 814-826-4053</em> for assistance when supporting a friend <br>
+            or loved one through mental health struggles.
+          </p>
+        </header>
+        <hr />
+        <h2>A hackMH Project</h2>
+        <hr />
+        <footer>
+          <ul class="icons">
+            <li><a href="https://github.com/hackmh" class="fa-github">Github</a></li>
+            <li><a href="http://hackmh.com" class="fa-laptop">hackMH Website</a></li>
+            <li><a href="mailto:hello@hackmh.comhackmh" class="fa-envelope">Mail</a></li>
+          </ul>
+        </footer>
+      </section>
+
+    <!-- Footer -->
+      <footer id="footer">
+        <ul class="copyright">
+          <li>&copy; hackMH</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+      </footer>
+
+  </div>
+
+  <!--[if lte IE 8]><script src="{{ url_for('static', filename='js/respond.min.js') }}"></script><![endif]-->
+  <script>
+    if ('addEventListener' in window) {
+      window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+      document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+    }
+  </script>
 {% endblock %}

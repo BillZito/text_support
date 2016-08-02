@@ -1,11 +1,21 @@
 <!doctype html>
 
-<title>Text Support</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-
-<div class="page">
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+<html>
+  <head>
+    <title>Text Support</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="{{ url_for('static', filename='js/html5/shiv.js') }}"></script><![endif]-->
+    <!-- Version with the Git commit hash from the previous commit and make it
+    so `?` and `=` are not escaped. -->
+    <link rel="stylesheet" href="{{ url_for('static',
+    filename='css/main.css?v=3848fad522c6f25106375bc7b9df0d930bc76c1c') |
+    replace('%3F', '?') | replace('%3D', '=') }}" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="{{ url_for('static', filename='css/ie9.css') }}" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="{{ url_for('static', filename='css/ie8.css') }}" /><![endif]-->
+    <noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}" /></noscript>
+  </head>
+  <body class="is-loading">
+    {% block body %}{% endblock %}
+  </body>
+</html>
