@@ -10,18 +10,73 @@ import os
 from twilio import TwilioRestException
 from twilio.rest import TwilioRestClient
 
+CATEGORY_RESPONSES = {
+    "depression":
+    """Remember 1) depression is a
+    serious, and often long-term condition, 2) it's never their fault
+    for being depressed. Try saying\"you are important to me. Your
+    life is important to me.\"""",
+    "sexual_assault":
+    """Remember 1) it is never the survivor's fault
+    , 2) use the words that the survivor uses and let them guide you.
+    Try saying \"It's really hard to share something like this.
+    Thank you for sharing with me.\"""",
+    "anxiety":
+    """Remember 1) it's never their fault for feeling nervous,
+    2) talk in a calm and reassuring voice.
+    Try saying\"let's take two deep breaths together.\"""",
+    "eating_disorder":
+    """Remember 1) it is never their fault for feeling
+    bad, 2) it is your job to help, not to make them realize a
+    problem you think they have. Try saying\"How are you feeling?\""""
+}
+
+CATEGORY_RESPONSES["unknown"] = ("Are you helping your friend with"
+                                 + ", ".join(CATEGORY_RESPONSES.keys())
+                                 + ", or something else?")
+
 def get_response(message):
     """
     Given what the texter has sent to us, determine our response.
-
     Args:
         message (str): The message the texter has sent to us.
 
+    Use one dictionary to hold counts for each category of keywords,
+    and one to hold list of all keywords for that category.
+    Given a message, find the most common category and respond given
+    a third dict. of responses. If all counts 0, respond asking for
+    category.
+
     Response:
         str: The response we will text back to them.
+
     """
-    # @TODO Fill this function in with code that will have respond.
-    return message
+    category_counts = {"depression":0, "sexual_assault": 0, "anxiety":0,
+                       "eating_disorder":0}
+
+    keywords = {"depression": ['depress', 'sad', 'lonely', 'upset', 'tired'],
+                "sexual_assault": ['sex', 'assault', 'rape', 'hookup',
+                                   'survivor'],
+                "anxiety": ['panic', 'anxi', 'nervous', 'afraid', 'breath'],
+                "eating_disorder": ['bulimi', 'anorex', 'body', 'eating',
+                                    'exercis']
+               }
+
+    #for each key/val in keyword, add one to category's count if in message
+    for category, keyword_list in keywords.items():
+        for keyword in keyword_list:
+            if keyword in message:
+                category_counts[category] += 1
+
+    #for each category in counts, if larger value, set to new max val/response
+    curr_max = 0
+    response = CATEGORY_RESPONSES["unknown"]
+    for category, count in category_counts.items():
+        if count > curr_max:
+            curr_max = count
+            response = CATEGORY_RESPONSES[category]
+
+    return response
 
 def get_follow_up_body():
     """
