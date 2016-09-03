@@ -6,7 +6,7 @@ Tests for `text.py`.
 
 import unittest
 
-from text_support.text import get_response
+from text_support.text import get_response, get_follow_up_body
 
 class GetResponseTestCase(unittest.TestCase):
     """
@@ -21,3 +21,13 @@ class GetResponseTestCase(unittest.TestCase):
         """
         message = "test"
         self.assertEqual(message, get_response(message))
+
+    def test_follow_up_body(self):
+        """
+        Test the follow up we send to the texter if they texted within the last
+        week.
+        """
+        resp = get_follow_up_body()
+
+        self.assertTrue(isinstance(resp, str))
+        self.assertTrue(len(resp) > 0)
