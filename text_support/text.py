@@ -7,6 +7,7 @@ user.
 
 import os
 
+from twilio import TwilioRestException
 from twilio.rest import TwilioRestClient
 
 def get_response(message):
@@ -21,6 +22,20 @@ def get_response(message):
     """
     # @TODO Fill this function in with code that will have respond.
     return message
+
+def get_follow_up_body():
+    """
+    Return the follow up text to send to the user reminding them to follow up
+    with their friend.
+
+    Returns:
+        str: The body of the follow up text to be sent.
+    """
+    resp = ('Thank you again for texting into Text Support! '
+            'If you feel comfortable, consider following up whoever '
+            'you were supporting when you texted us.')
+
+    return resp
 
 def get_text_class():
     """
@@ -41,6 +56,12 @@ def get_text_class():
         if env in env_set:
             return text_class
 
+class TextException(Exception):
+    """
+    An exception caused by attempting to send a text.
+    """
+    pass
+
 class Text(object):
     """
     The base class for all classes implementing a texting behavior.
@@ -56,6 +77,9 @@ class Text(object):
         Args:
             phone_number (str): The phone_number to which we wish to send the message.
             body (str): The body of the message that we will send.
+
+        Raises:
+            TextException: If fails to successfully send text.
         """
         # pylint: disable=unused-argument
 
@@ -91,13 +115,19 @@ class TwilioText(Text):
         Args:
             phone_number(str): The phone number to which we wish to send the message.
             body (str): The body of the message that we will send.
+
+        Raises:
+            TextException: If failed to send text message.
         """
         super(TwilioText, TwilioText).send_message(phone_number, body)
 
         client = cls._get_twilio_client()
         from_number = os.environ["FROM_NUMBER"]
 
-        client.messages.create(to=phone_number, from_=from_number, body=body)
+        try:
+            client.messages.create(to=phone_number, from_=from_number, body=body)
+        except TwilioRestException as ex:
+            raise TextException(str(ex))
 
 class TestText(Text):
     """

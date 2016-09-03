@@ -16,6 +16,7 @@ class Config(object):
     SECRET_KEY = os.environ["SECRET_KEY"]
     SQLALCHEMY_DATABASE_URI = os.environ["DATABASE_URL"]
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    CUTOFF_DAYS = 7
 
 class DevelopmentConfig(Config):
     """

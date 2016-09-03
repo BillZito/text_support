@@ -22,6 +22,11 @@ This should only be done by the project leader.
 Our deploy tasks in the Makefile add all of the Heroku based add ons by default.
 We use New Relic, Postgres, and Heroku Scheduler.
 
+#### Heroku Scheduler
+
+We need to configure the `Heroku scheduler` to run `python manage.py batch_follow_up_texts`
+every day at a given time.
+
 ### Twilio
 
 We use Twilio for receiving and responding to text messages. We assign this
