@@ -1,6 +1,8 @@
 # text_support
 
-A service to guide you through the basics of supporting a friend.
+A service to guide you through the basics of supporting a friend. Check out the
+[text-support website](https://text-support.hackmh.com) or text **1-814-826-4053**
+for assistance supporting a friend.
 
 ## hackMH
 
