@@ -9,3 +9,4 @@ pylint==1.*
 psycopg2==2.*
 simplejson==3.*
 twilio==5.*
+newrelic==2.*
