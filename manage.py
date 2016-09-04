@@ -1,8 +1,9 @@
 """
-`manage.py` contains the files for running migrations of the database.
+`manage.py` contains the files for running scripts/tasks on our application.
 
 This allows us to run `python manage.py db init` and `python manage.py db
-upgrate` for database tasks.
+upgrate` for database tasks, as well as our custom defined tasks (i.e.
+`python manage.py batch_follow_up_texts`).
 """
 
 # pylint: disable=import-error, invalid-name, unused-import
@@ -26,26 +27,45 @@ manager.add_command("db", MigrateCommand)
 @manager.command
 def create_db():
     """
-    Run with `python manage.py create_db`.
-    This command will create the applications database.
+    Create the applications database.
     """
     db.create_all()
 
-@manager.command
-def batch_follow_up_texts():
+def _handle_follow_up_response(res):
     """
-    Run with `python manage.py batch_follow_up_texts`
+    A helper function to handle the response of the script which sends our
+    follow up texts.
 
-    Send all of the necessary follow up texts to `Texters`.
+    Args:
+        res (send_follow_up_texts.Stats): Named tuple with `successful` and
+        `failed` fields.
     """
-    res = send_follow_up_texts()
-
     if res.failed > 0:
         err = ('Error: {failure} failues '
                'and {success} successes.').format(failure=res.failed,
                                                   success=res.successful)
 
         sys.exit(err)
+
+
+@manager.command
+def batch_follow_up_texts():
+    """
+    Send all of the necessary follow up texts to `Texters`.
+    """
+    res = send_follow_up_texts()
+
+    _handle_follow_up_response(res)
+
+@manager.command
+def force_follow_up_texts():
+    """
+    Send all the follow up texts to `Texters`, but only those who have texted
+    within the last day. Intended to be used for testing.
+    """
+    res = send_follow_up_texts(cutoff_days=0)
+
+    _handle_follow_up_response(res)
 
 if __name__ == "__main__":
     manager.run()

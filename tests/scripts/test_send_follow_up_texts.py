@@ -32,9 +32,7 @@ class SendFollowUpTextsTestCase(unittest.TestCase):
         self._in_cutoff.text_date = datetime.utcnow() - timedelta(days=cutoff_days,
                                                                   hours=3)
 
-        # Our cutoff is one week.
         self._out_cutoff = Texter('OUT_CUTOFF')
-        self._out_cutoff.text_date = datetime.utcnow()
 
         db.session.add_all([self._in_cutoff, self._out_cutoff])
         db.session.commit()
@@ -63,3 +61,18 @@ class SendFollowUpTextsTestCase(unittest.TestCase):
         send_follow_up_texts()
 
         self.assertEqual(start_count - 1, len(Texter.query.all()))
+
+    def test_sends_with_custom_cutoff(self):
+        """
+        We can manually configure the cutoff date, and we want to check that it
+        works appropriately if we do.
+        """
+        new_texter = Texter('SECOND_OUT_CUTOFF')
+        db.session.add(new_texter)
+        db.session.commit()
+
+        previous_texts = get_text_class().messages_sent
+        send_follow_up_texts(cutoff_days=0)
+
+        # For the `self._out_cutoff` user and the new one we just created.
+        self.assertEqual(previous_texts + 2, get_text_class().messages_sent)
