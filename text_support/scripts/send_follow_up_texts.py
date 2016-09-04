@@ -17,19 +17,22 @@ from ..text import get_follow_up_body, get_text_class, TextException
 
 Stats = namedtuple('Stats', ['successful', 'failed'])
 
-def main():
+def main(cutoff_days=environment_config().CUTOFF_DAYS):
     """
     Send texts to all Texters who texted in a week ago, encouraging them to
     follow up with their friend.
 
     Delete the texter from the database.
 
+    Args:
+        cutoff_days(int): The number of days ago for which we will send a follow
+        up text.
+
     Returns:
         Stats : The Stats pertaining to the success of this script.
     """
     now = datetime.utcnow()
 
-    cutoff_days = environment_config().CUTOFF_DAYS
     cutoff_date_start = now - timedelta(days=cutoff_days + 1)
     cutoff_date_end = now - timedelta(days=cutoff_days)
 
