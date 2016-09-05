@@ -2,7 +2,7 @@
 Tests for `views.py`.
 """
 
-# pylint: disable=import-error
+# pylint: disable=import-error, no-member
 
 import unittest
 
@@ -67,7 +67,7 @@ class WebhookTestCase(AppViewsTestCase):
         once I determine all of the functionality for the `/webhook` route.
         """
         post_body = dict(
-            From="+18148264053",
+            From="+(814) 201-5234",
             Body="Test"
         )
 
