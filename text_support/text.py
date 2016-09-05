@@ -12,26 +12,26 @@ from twilio.rest import TwilioRestClient
 
 CATEGORY_RESPONSES = {
     "depression":
-    """Remember 1) depression is a
-    serious, and often long-term condition, 2) it's never their fault
-    for being depressed. Try saying\"you are important to me. Your
-    life is important to me.\"""",
+    ("Remember: 1) Depression is a serious, and often long-term condition"
+     ". 2) It's never your friend\'s fault"
+     " for feeling down. 3) Try saying \"you are important to me. Your "
+     "life is important to me.\""),
     "sexual_assault":
-    """Remember 1) it is never the survivor's fault
-    , 2) use the words that the survivor uses and let them guide you.
-    Try saying \"It's really hard to share something like this.
-    Thank you for sharing with me.\"""",
+    ("Remember: 1) It is not your friend\'s fault, don't question their story"
+     ". 2) Use the words that your friend uses and let them guide you. "
+     "3) Try saying \"It's really hard to share something like this. "
+     "Thank you for sharing with me.\""),
     "anxiety":
-    """Remember 1) it's never their fault for feeling nervous,
-    2) talk in a calm and reassuring voice.
-    Try saying\"let's take two deep breaths together.\"""",
+    ("Remember: 1) It's never your friend\'s fault for feeling nervous. "
+     "2) Talk in a calm and reassuring voice. "
+     "3) Try saying \"let's take two deep breaths together.\""),
     "eating_disorder":
-    """Remember 1) it is never their fault for feeling
-    bad, 2) it is your job to help, not to make them realize a
-    problem you think they have. Try saying\"How are you feeling?\""""
+    ("Remember 1) It is never your friend\'s fault for feeling how they feel"
+     ". 2) Be a partner in thinking of potential next steps they could take."
+     " 3) Try saying \"What are you thinking about doing next?\"")
 }
 
-CATEGORY_RESPONSES["unknown"] = ("Are you helping your friend with"
+CATEGORY_RESPONSES["unknown"] = ("Are you helping your friend with "
                                  + ", ".join(CATEGORY_RESPONSES.keys())
                                  + ", or something else?")
 
