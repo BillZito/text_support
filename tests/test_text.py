@@ -2,7 +2,7 @@
 Tests for `text.py`.
 """
 
-# pylint: disable=import-error
+# pylint: disable=import-error, missing-docstring
 
 import unittest
 
@@ -30,6 +30,15 @@ class GetResponseTestCase(unittest.TestCase):
         self.assertEqual(answer, get_response(message))
         self.assertEqual(answer, get_response(message_two))
 
+    def test_recognize_capitals(self):
+        """
+        We want to match no matter the capitalization that they use.
+        """
+        message = "Depression"
+        answer = CATEGORY_RESPONSES["depression"]
+
+        self.assertEqual(answer, get_response(message))
+
     def test_sexual_assault(self):
         message = "sex"
         message_two = "survivor"
@@ -47,11 +56,11 @@ class GetResponseTestCase(unittest.TestCase):
         answer = CATEGORY_RESPONSES["eating_disorder"]
         self.assertEqual(answer, get_response(message))
 
-    
+
     def test_mixed(self):
         """
         If there is a message with multiple keywords, the response
-        should be for the category with the most keywords. 
+        should be for the category with the most keywords.
         """
         most_depressed = "went to park, depressed, tired, sex, eat"
         answer_depress = CATEGORY_RESPONSES["depression"]
@@ -72,4 +81,4 @@ class GetResponseTestCase(unittest.TestCase):
         message = ""
         answer = CATEGORY_RESPONSES["unknown"]
         self.assertEqual(answer, get_response(message))
-        
+
