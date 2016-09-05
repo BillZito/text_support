@@ -65,7 +65,7 @@ def get_response(message):
     #for each key/val in keyword, add one to category's count if in message
     for category, keyword_list in keywords.items():
         for keyword in keyword_list:
-            if keyword in message:
+            if keyword in message.lower():
                 category_counts[category] += 1
 
     #for each category in counts, if larger value, set to new max val/response

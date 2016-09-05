@@ -43,7 +43,7 @@ class Texter(db.Model):
         Returns:
             str: A string representation.
         """
-        return "<Texter {0}>".format(phone_number)
+        return "<Texter {0}>".format(self.phone_number)
 
     @declared_attr
     def __tablename__(cls):
